@@ -1,40 +1,41 @@
+
 // Board Code
 let board;
 let boardWidth = 750;
 let boardHeight = 250;
 let context;
 
-// Dino Code
-let dinoWidth = 88;
-let dinoHeight = 94;
-let dinoX = 50;
-let dinoY = boardHeight - dinoHeight;
-let dinoImage;
+// Junimo Code
+let junimoWidth = 88;
+let junimoHeight = 94;
+let junimoX = 50;
+let junimoY = boardHeight - junimoHeight;
+let junimoImage;
 
-let dino = {
-    x : dinoX,
-    y : dinoY,
-    width : dinoWidth,
-    height : dinoHeight
+let junimo = {
+    x : junimoX,
+    y : junimoY,
+    width : junimoWidth,
+    height : junimoHeight
 }
 
- // Cactus Code
- let cactusArray = [];
+ // Flower Code
+ let flowerArray = [];
 
- let cactus1Width = 34;
- let cactus2Width = 69;
- let cactus3Width = 102;
+ let flower1Width = 34;
+ let flower2Width = 69;
+ let flower3Width = 102;
 
- let cactusHeight = 70;
- let cactusX = 700;
- let cactusY = boardHeight - cactusHeight;
+ let flowerHeight = 70;
+ let flowerX = 700;
+ let flowerY = boardHeight - flowerHeight;
 
- let cactus1Image;
- let cactus2Image;
- let cactus3Image;
+ let flower1Image;
+ let flower2Image;
+ let flower3Image;
 
  // Movement and Game Code
- let velocityX = 8;
+ let velocityX = -8;
  let velocityY = 0;
  let gravity = .4;
 
@@ -49,25 +50,25 @@ let dino = {
     context = board.getContext("2d");
 
 
-    dinoImage = new Image();
-    dinoImage.src = "./images/dino.png";
-    dinoImage.onload = function() {
-        context.drawImage(dinoImage, dino.x, dino.y, dino.width, dino.height);
+    junimoImage = new Image();
+    junimoImage.src = "./images/junimo.png";
+    junimoImage.onload = function() {
+        context.drawImage(junimoImage, junimo.x, junimo.y, junimo.width, junimo.height);
     }
 
 
-     cactus1Image = new Image();
-     cactus1Image.src = "./images/cactus1.png";
+    flower1Image = new Image();
+    flower1Image.src = "./images/flower1.png";
 
-     cactus2Image = new Image();
-     cactus2Image.src = "./images/cactus2.png";
+    flower2Image = new Image();
+    flower2Image.src = "./images/flower2.png";
 
-     cactus3Image = new Image();
-     cactus3Image.src = "./images/cactus3.png";
+    flower3Image = new Image();
+    flower3Image.src = "./images/flower3.png";
 
      requestAnimationFrame(update);
-     setInterval(placeCactus, 1000);
-     document.addEventListener("keydown", moveDino);
+     setInterval(placeFlower, 1000);
+     document.addEventListener("keydown", moveJunimo);
  }
 
  function update() {
@@ -77,22 +78,22 @@ let dino = {
      }
      context.clearRect(0, 0, board.width, board.height);
 
-     // Dino Stuff
+     // Junimo Stuff
      velocityY += gravity;
-     dino.y = Math.min(dino.y + velocityY, dinoY);
-     context.drawImage(dinoImage, dino.x, dino.y, dino.width, dino.height);
+     junimo.y = Math.min(junimo.y + velocityY, junimoY);
+     context.drawImage(junimoImage, junimo.x, junimo.y, junimo.width, junimo.height);
 
-     // Cactus Stuff
-     for (let i = 0; i < cactusArray.length; i++) {
-         let cactus = cactusArray[i];
-         cactus.x += velocityX;
-         context.drawImage(cactus.Image, cactus.x, cactus.y, cactus.width, cactus.height);
+     // Flower Stuff
+     for (let i = 0; i < flowerArray.length; i++) {
+         let flower = flowerArray[i];
+         flower.x += velocityX;
+         context.drawImage(flower.image, flower.x, flower.y, flower.width, flower.height);
 
-         if(detectCollision(dino, cactus)) {
+         if(detectCollision(junimo, flower)) {
              gameOver = true;
-             dinoImage.src = ".images/dinodead.png";
-             dinoImage.onload = function() {
-                 context.drawImage(dinoImage, dino.x, dino.y, dino.width, dino.height);
+             junimoImage.src = ".images/junimodead.png";
+             junimoImage.onload = function() {
+                 context.drawImage(junimoImage, junimo.x, junimo.y, junimo.width, junimo.height);
              }
          }
      }
@@ -104,55 +105,55 @@ let dino = {
      context.fillText(score, 5, 20);
  }
 
- function moveDino(e) {
+ function moveJunimo(e) {
      if(gameOver) {
          return;
      }
 
-     if((e.code == "Space" || e.code == "ArrowUp") && dino.y == dinoY) {
+     if((e.code == "Space" || e.code == "ArrowUp") && junimo.y == junimoY) {
          velocityY = -10;
      }
 
-     else if (e.code == "ArrowDown" && dino.y == dinoY) {
+     else if (e.code == "ArrowDown" && junimo.y == junimoY) {
 
      }
  }
 
- function placeCactus() {
+ function placeFlower() {
      if (gameOver) {
          return;
      }
 
-     let cactus = {
+     let flower = {
          image : null,
-         x : cactusX,
-         y : cactusY,
+         x : flowerX,
+         y : flowerY,
          width : null,
-         height: cactusHeight
+         height: flowerHeight
      }
 
-     let placeCactusChance = Math.random();
+     let placeFlowerChance = Math.random();
 
-     if (placeCactusChance > .90) {
-         cactus.image = cactus3Image;
-         cactus.width = cactus3Width;
-         cactusArray.push(cactus);
+     if (placeFlowerChance > .90) {
+        flower.image = flower3Image;
+        flower.width = flower3Width;
+        flowerArray.push(flower);
      }
 
-     else if (placeCactusChance > .70) {
-         cactus.image = cactus2Image;
-         cactus.width = cactus2Width;
-         cactusArray.push(cactus);
+     else if (placeFlowerChance > .70) {
+        flower.image = flower2Image;
+        flower.width = flower2Width;
+        flowerArray.push(flower);
      }
 
-     else if (placeCactusChance > .50) {
-         cactus.image = cactus1Image;
-         cactus.width = cactus1Width;
-         cactusArray.push(cactus);
+     else if (placeFlowerChance > .50) {
+        flower.image = flower1Image;
+        flower.width = flower1Width;
+        flowerArray.push(flower);
      }
 
-     if (cactusArray.length > 5) {
-         cactusArray.shift();
+     if (flowerArray.length > 5) {
+        flowerArray.shift();
      }
  }
 
