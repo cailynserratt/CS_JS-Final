@@ -51,20 +51,20 @@ let junimo = {
 
 
     junimoImage = new Image();
-    junimoImage.src = "./images/junimo.png";
+    junimoImage.src = "./image/junimo.png";
     junimoImage.onload = function() {
         context.drawImage(junimoImage, junimo.x, junimo.y, junimo.width, junimo.height);
     }
 
 
     flower1Image = new Image();
-    flower1Image.src = "./images/flower1.png";
+    flower1Image.src = "./image/flower1.png";
 
     flower2Image = new Image();
-    flower2Image.src = "./images/flower2.png";
+    flower2Image.src = "./image/flower2.png";
 
     flower3Image = new Image();
-    flower3Image.src = "./images/flower3.png";
+    flower3Image.src = "./image/flower3.png";
 
      requestAnimationFrame(update);
      setInterval(placeFlower, 1000);
@@ -91,7 +91,7 @@ let junimo = {
 
          if(detectCollision(junimo, flower)) {
              gameOver = true;
-             junimoImage.src = "./images/junimodead.png";
+             junimoImage.src = "./image/junimodead.png";
              junimoImage.onload = function() {
                  context.drawImage(junimoImage, junimo.x, junimo.y, junimo.width, junimo.height);
              }
