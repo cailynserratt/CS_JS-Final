@@ -91,7 +91,7 @@ let junimo = {
 
          if(detectCollision(junimo, flower)) {
              gameOver = true;
-             junimoImage.src = ".images/junimodead.png";
+             junimoImage.src = "./images/junimodead.png";
              junimoImage.onload = function() {
                  context.drawImage(junimoImage, junimo.x, junimo.y, junimo.width, junimo.height);
              }
